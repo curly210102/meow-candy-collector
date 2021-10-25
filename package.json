@@ -1,0 +1,19 @@
+{
+  "name": "meow-candy-collector",
+  "version": "0.1.0",
+  "description": "Cute meow candy automatic collector",
+  "main": "index.js",
+  "author": "Curly Brackets",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc",
+    "start": "node ./index.js"
+  },
+  "devDependencies": {
+    "@tsconfig/node14": "^1.0.1",
+    "@types/node": "^16.11.4",
+    "jimp": "^0.16.1"
+  }
+}
