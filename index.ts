@@ -42,14 +42,11 @@ async function recognizeTapTarget(
   targetImage.greyscale();
   const tWidth = targetImage.bitmap.width;
   const tHeight = targetImage.bitmap.height;
-  const tCenterX = tWidth >> 1;
-  const tCenterY = tHeight >> 1;
   const rect = [
     targetImage.getPixelColor(0, 0),
     targetImage.getPixelColor(tWidth, 0),
     targetImage.getPixelColor(tWidth, tHeight),
     targetImage.getPixelColor(0, tHeight),
-    targetImage.getPixelColor(tCenterX, tCenterY),
   ];
 
   const image = await Jimp.read(srcImgPath);
@@ -67,7 +64,9 @@ async function recognizeTapTarget(
       image.getPixelColor(x, y) === rect[0] &&
       image.getPixelColor(x + tWidth, y + tHeight) === rect[3] &&
       image.getPixelColor(x + tWidth, y) === rect[1] &&
-      image.getPixelColor(x, y + tHeight) === rect[2]
+      image.getPixelColor(x, y + tHeight) === rect[2] &&
+      Jimp.diff(image.clone().crop(x, y, tWidth, tHeight), targetImage, 0.4)
+        .percent < 0.15
     ) {
       matchedPoint = [x, y];
       break;
